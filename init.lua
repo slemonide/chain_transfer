@@ -93,7 +93,7 @@ minetest.register_abm({
         -- Temporarily turn off teleporter so player won't get into loop
         swap_node(pos, name .. "_off")
         local timer = minetest.env:get_node_timer(pos)
-        timer:start(WAIT_TIME * 5)
+        timer:start(WAIT_TIME * 2)
     end,
 })
 
