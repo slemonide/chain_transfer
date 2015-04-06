@@ -6,6 +6,15 @@ local name = "chain_transfer:link"
 local texture = "chain_transfer_link.png"
 local texture_off = "chain_transfer_link_off.png"
 
+local function swap_node(pos, name)
+        local node = minetest.get_node(pos)
+        if node.name == name then
+                return
+        end
+        node.name = name
+        minetest.swap_node(pos, node)
+end
+
 minetest.register_node(name, {
     description = "Transfer Link",
     drawtype = "signlike",
@@ -13,7 +22,7 @@ minetest.register_node(name, {
     paramtype2 = "wallmounted",
     sunlight_propagates = true,
     walkable = false,
-    alpha = 160,
+    alpha = 200,
     tiles = {texture},
     inventory_image = texture,
     wield_image = texture,
@@ -33,7 +42,7 @@ minetest.register_node(name .. "_off", {
     paramtype2 = "wallmounted",
     sunlight_propagates = true,
     walkable = false,
-    alpha = 160,
+    alpha = 200,
     tiles = {texture_off},
     inventory_image = texture,
     wield_image = texture,
@@ -45,16 +54,10 @@ minetest.register_node(name .. "_off", {
     },
     groups = {cracky=3, not_in_creative_inventory=1},
     drop = name,
+    on_timer = function(pos, elapsed)
+        swap_node(pos, name)
+    end,
 })
-
-local function swap_node(pos, name)
-        local node = minetest.get_node(pos)
-        if node.name == name then
-                return
-        end
-        node.name = name
-        minetest.swap_node(pos, node)
-end
 
 minetest.register_abm({
     nodenames = {name},
@@ -87,18 +90,10 @@ minetest.register_abm({
             object:setpos(link_shift)
         end
 
-        -- Temporarily turn off teleporter so player won't get in loop
+        -- Temporarily turn off teleporter so player won't get into loop
         swap_node(pos, name .. "_off")
-    end,
-})
-
--- Turn teleporter on
-minetest.register_abm({
-    nodenames = {name .. "_off"},
-    interval = WAIT_TIME * 10,
-    chance = 1,
-    action = function(pos, node, active_object_count, active_object_count_wider)
-        swap_node(pos, name)
+        local timer = minetest.env:get_node_timer(pos)
+        timer:start(WAIT_TIME * 5)
     end,
 })
 
