@@ -1,12 +1,11 @@
-amuletum
+chain transfer
 ========
 
-Minetest/Freeminer mod that adds various amulets
+Minetest/Freeminer mod that adds simple teleports that can transfer objects in chains
 
 #### Items and Craft Recipes
 
-* Name: amuletum:lifeeater
+* Name: chain_transfer:link
 * Craft recipe:
-	{'moreores:silver_lump', 'gems:garnet', ''},
-	{'animalmaterials:bone', 'group:stick', 'animalmaterials:bone'},
-	{'', 'group:stick', 'moreores:silver_lump'},
+	{"bucket:bucket_lava", "", "bucket:bucket_water"},
+	{"default:cobble", "", "default:wood"},

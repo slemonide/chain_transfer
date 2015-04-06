@@ -101,3 +101,11 @@ minetest.register_abm({
         swap_node(pos, name)
     end,
 })
+
+minetest.register_craft({
+	output = "chain_transfer:link",
+	recipe = {
+		{"bucket:bucket_lava", "", "bucket:bucket_water"},
+		{"default:cobble", "", "default:wood"},
+	}
+})
