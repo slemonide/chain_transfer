@@ -98,9 +98,12 @@ minetest.register_abm({
 })
 
 minetest.register_craft({
-	output = "chain_transfer:link",
-	recipe = {
-		{"bucket:bucket_lava", "", "bucket:bucket_water"},
-		{"default:cobble", "", "default:wood"},
-	}
+    output = "chain_transfer:link",
+    recipe = {
+        {"bucket:bucket_lava", "", "bucket:bucket_water"},
+        {"default:cobble", "", "default:wood"},
+    },
+    replacements = {
+        {"bucket:bucket_lava", "bucket:bucket_empty"}
+    }
 })
